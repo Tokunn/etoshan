@@ -353,6 +353,7 @@ Pose Xtion::checkPose( const nite::Skeleton& skeelton )
     const nite::Point3f& joint_head = ( skeelton.getJoint( nite::JOINT_HEAD ) ).getPosition();
     const nite::Point3f& joint_neck = ( skeelton.getJoint( nite::JOINT_NECK ) ).getPosition();
     const nite::Point3f& joint_torso = ( skeelton.getJoint( nite::JOINT_TORSO ) ).getPosition();
+    const nite::Point3f& joint_left_hip = ( skeelton.getJoint( nite::JOINT_LEFT_HIP ) ).getPosition();
     const nite::Point3f& joint_left_hand = ( skeelton.getJoint( nite::JOINT_LEFT_HAND ) ).getPosition();
     const nite::Point3f& joint_rigt_hand = ( skeelton.getJoint( nite::JOINT_RIGHT_HAND ) ).getPosition();
 
@@ -367,7 +368,7 @@ Pose Xtion::checkPose( const nite::Skeleton& skeelton )
         direcImage = cv::imread( "Images/MAJOKO.png" );
     }
     /*'' Check KAIDAN ''*/
-    if ( ( ( joint_left_hand.y < joint_neck.y ) && ( joint_rigt_hand.y < joint_neck.y ) ) && ( ( joint_torso.y < joint_left_hand.y ) && ( joint_torso.y < joint_rigt_hand.y ) ) ) {
+    if ( ( ( joint_left_hand.y < joint_neck.y ) && ( joint_rigt_hand.y < joint_neck.y ) ) && ( ( joint_left_hip.y < joint_left_hand.y ) && ( joint_left_hip.y < joint_rigt_hand.y ) ) ) {
         checkPose = KAIDAN;
         direcImage = cv::imread( "Images/KAIDAN.png" );
     }
