@@ -34,8 +34,8 @@
 使い方
 ------
 OpenNI2とNiTE2をインストールしたPCでビルドを行います。  
-xtion/でmakeを実行してください。  
-xtion/Bin/x64-Release/下に作成されたSkeltonが実行ファイルです。  
+etoshan/PC/でmakeを実行してください。  
+etoshan/PC/Bin/x64-Release/下に作成されたEtoshanが実行ファイルです。  
 XtionまたはKinectをPCにつないで実行してください。  
 現時点では、腰より両手を上にあげた場合と、頭より両手を上にあげた場合で反応します。  
 
