@@ -140,23 +140,23 @@ void Xtion::printWindow()
     }
     else {
         skeletonCount++;
-        if ( skeletonCount >= 100 ) {
+        if ( skeletonCount >= 200 ) {
             skeletonCount = 0;
         }
 
-        if ( skeletonCount < 20 ) {
+        if ( skeletonCount < 40 ) {
             direcImage = cv::imread( "Images/Setumei.png" );
         }
-        else if ( skeletonCount < 40 ) {
+        else if ( skeletonCount < 80 ) {
             direcImage = cv::imread( "Images/Setumei1.png" );
         }
-        else if ( skeletonCount < 60 ) {
+        else if ( skeletonCount < 120 ) {
             direcImage = cv::imread( "Images/Setumei2.png" );
         }
-        else if ( skeletonCount < 80 ) {
+        else if ( skeletonCount < 160 ) {
             direcImage = cv::imread( "Images/Setumei3.png" );
         }
-        else if ( skeletonCount < 100 ) {
+        else if ( skeletonCount < 200 ) {
             direcImage = cv::imread( "Images/Setumei4.png" );
         }
     }
