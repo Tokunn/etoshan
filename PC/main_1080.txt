@@ -68,6 +68,8 @@ class Xtion
         Pose pose;
         int countPose;
         int beforeRecoNum;
+        bool skeletonFlag;
+        int skeletonCount;
 };
 
 
@@ -91,6 +93,9 @@ Xtion::Xtion()
     beforePose = NONE;
     afterimagePose = NONE;
     poseCheckFlag = true;
+
+    skeletonFlag = false;
+    skeletonCount = 0;
 }
 
 
@@ -130,6 +135,32 @@ void Xtion::printWindow()
         }
     }
 
+    if ( skeletonFlag ) {   // if checked joint
+        skeletonCount = 0;
+    }
+    else {
+        skeletonCount++;
+        if ( skeletonCount >= 100 ) {
+            skeletonCount = 0;
+        }
+
+        if ( skeletonCount < 20 ) {
+            direcImage = cv::imread( "Images/Setumei.png" );
+        }
+        else if ( skeletonCount < 40 ) {
+            direcImage = cv::imread( "Images/Setumei1.png" );
+        }
+        else if ( skeletonCount < 60 ) {
+            direcImage = cv::imread( "Images/Setumei2.png" );
+        }
+        else if ( skeletonCount < 80 ) {
+            direcImage = cv::imread( "Images/Setumei3.png" );
+        }
+        else if ( skeletonCount < 100 ) {
+            direcImage = cv::imread( "Images/Setumei4.png" );
+        }
+    }
+
     std::ostringstream timeName;    // Make file name
     timeName << "Images/Time/" << countPose << ".png";
     std::string timeImageName = timeName.str();
@@ -158,6 +189,7 @@ void Xtion::printWindow()
     cvMoveWindow( windowName, 0, 0 );
 
     //cv::imshow( "Depth Frame", depthImage );        // #=# DEBUG #=#
+    std::cout << skeletonFlag << '\t' << skeletonCount << '\n';
 }
 
 
@@ -195,6 +227,7 @@ void Xtion::makeDebugStream( nite::UserTrackerFrameRef& userFrame )
     }
 
     if ( users.getSize() == 0 ) {
+        skeletonFlag = false;
     }
     putDebugText( users );
 }
@@ -325,6 +358,7 @@ void Xtion::showSkeleton( nite::UserTracker& userTracker, const nite::UserData& 
         if ( joint.getPositionConfidence() < 0.7f ) {
             continue;
         }
+        skeletonFlag = true;
         const nite::Point3f& position = joint.getPosition();
         float x = 0, y = 0;
         userTracker.convertJointCoordinatesToDepth( position.x, position.y, position.z, &x, &y );
@@ -332,6 +366,7 @@ void Xtion::showSkeleton( nite::UserTracker& userTracker, const nite::UserData& 
     }
 
     pose = checkPose( skeelton );   // Check Pose
+
     afterimagePose = beforePose;
     if ( poseCheckFlag ) {
         if ( pose != NONE && pose == beforePose ) {
